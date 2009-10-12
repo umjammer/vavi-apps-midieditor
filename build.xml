@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<!-- ////////////////////////////////////////////////////////////////////// -->
+<!-- Copyright (c) 2002 by Naohide Sano, All rights reserved.               -->
+<!--                                                                        -->
+<!-- Written by Naohide Sano                                                -->
+<!--                                                                        -->
+<!-- vavi.apps.midiEditor                                                   -->
+<!--                                                                        -->
+<!-- @author	Naohide Sano                                                -->
+<!-- @version	0.00	020522	nsano	initial version                     -->
+<!--                                                                        -->
+<!-- ////////////////////////////////////////////////////////////////////// -->
+
+<project name="vavi.apps.midiEditor" default="run" basedir="."
+         xmlns:ivy="antlib:org.apache.ivy.ant">
+
+  <property file="local.properties" />
+
+  <property name="dir.build" value="target/classes" />
+  <property name="dir.lib" value="lib" />
+
+  <!-- クラスパスの定義 -->
+  <path id="project.class.path">
+    <fileset dir="${dir.lib}">
+      <include name="*.jar" />
+    </fileset>
+    <pathelement location="${gervill.jar}" />
+  </path>
+
+  <!-- ターゲットの定義 -->
+
+  <!-- clean -->
+  <target name="clean" description="ビルド環境のクリア">
+    <delete>
+      <fileset dir="${dir.build}">
+        <include name="**/*" />
+      </fileset>
+      <fileset dir="target/test-classes">
+        <include name="**/*" />
+      </fileset>
+    </delete>
+  </target>
+
+  <!-- prepare -->
+  <target name="prepare" description="ビルド環境の準備">
+    <ivy:settings file="ivy-settings.xml" />
+    <ivy:convertpom pomFile="pom.xml" ivyFile="ivy.xml" />
+    <ivy:retrieve />
+  </target>
+
+  <!-- javac -->
+  <target name="compile" depends="prepare" description="コンパイル">
+    <javac debug="on" encoding="MS932" destdir="${dir.build}">
+      <classpath refid="project.class.path" />
+      <include name="**/*.java" />
+      <src path="src/main/java" />
+    </javac>
+
+    <copy todir="${dir.build}">
+      <fileset dir="src/main/resources">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+  </target>
+
+  <!-- run -->
+  <target name="run" depends="compile" description="Executes the Program">
+    <java classname="vavi.apps.midiEditor.MidiEditor" fork="yes">
+      <classpath>
+        <path refid="project.class.path" />
+        <pathelement location="${dir.build}" />
+        <pathelement location="${libmfi-klab.jar}" />
+      </classpath>
+      <arg value="${dir}" />
+    </java>
+  </target>
+
+ <!-- run.2 -->
+  <target name="run.2" depends="compile" description="Executes the Program">
+    <java classname="vavi.apps.midiEditor.MidiEditor" fork="yes">
+      <jvmarg value="-Duser.home=${home.dir}" />
+      <jvmarg value="-Djavax.sound.midi.Sequencer=${vavi.sound.mfi.sequencer}"/>
+      <jvmarg value="-Djavax.sound.midi.Synthesizer=${vavi.sound.mfi.synthesizer}"/>
+      <jvmarg value="-Dcom.sun.media.sound.Soundbank.defaultSoundbank=${vavi.sound.mfi.soundbank}"/> <!-- require patched gervill -->
+      <jvmarg value="-Xmx512m"/>
+      <classpath>
+        <path refid="project.class.path" />
+        <pathelement location="${dir.build}" />
+        <pathelement location="${libmfi-klab.jar}" />
+      </classpath>
+      <arg value="${dir}" />
+    </java>
+  </target>
+
+  <!-- t1 -->
+  <target name="t1" depends="compile" description="run w/ param">
+    <java classname="vavi.apps.midiEditor.MidiEditor" fork="yes">
+      <jvmarg value="-Duser.home=${home.dir}" />
+      <classpath>
+        <path refid="project.class.path" />
+        <pathelement location="${dir.build}" />
+        <pathelement location="${libmfi-klab.jar}" />
+      </classpath>
+      <arg value="${vavi.apps.midiEditor.t1.midi_in}" />
+    </java>
+  </target>
+
+</project>
+
+<!-- -->

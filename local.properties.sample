@@ -1,0 +1,17 @@
+#
+# Copyright (c) 2003 by Naohide Sano, All rights reserved.
+#
+# Written by Naohide Sano
+#
+# ant properties for vavi.apps.mfiPlayer
+#
+# @author	Naohide Sano
+# @version	0.00	031213	nsano	initial version
+#
+
+#
+# t1
+#
+vavi.apps.midiEditor.t1.midi_in=C:/tmp/000/EN2184A/DOS/FMTEST.MID
+
+##
