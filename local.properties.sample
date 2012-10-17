@@ -12,6 +12,7 @@
 #
 # t1
 #
+encoding=utf-8
 vavi.apps.midiEditor.t1.midi_in=C:/tmp/000/EN2184A/DOS/FMTEST.MID
 
 ##

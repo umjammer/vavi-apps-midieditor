@@ -93,7 +93,7 @@ Debug.println("model set: " + model.getClass().getName());
         return model.getTracks();
     }
 
-    /** ƒgƒ‰ƒbƒNƒiƒ“ƒo[‚ğ•Ô‚µ‚Ü‚·D */
+    /** ãƒˆãƒ©ãƒƒã‚¯ãƒŠãƒ³ãƒãƒ¼ã‚’è¿”ã—ã¾ã™ï¼ */
     public void setTrackNumber(int trackNumber) {
         model.setTrackNumber(trackNumber);
     }
@@ -113,9 +113,9 @@ Debug.println("model set: " + model.getClass().getName());
         model.removeFilter(filter);
     }
 
-    /** ƒe[ƒuƒ‹‚ÌƒZƒ‹ƒŒƒ“ƒ_ƒ‰ */
+    /** ãƒ†ãƒ¼ãƒ–ãƒ«ã®ã‚»ãƒ«ãƒ¬ãƒ³ãƒ€ãƒ© */
     private TableCellRenderer tcRenderer = new DefaultTableCellRenderer() {
-    	/** ƒŒƒ“ƒ_ƒ‰‚ÌƒeƒLƒXƒg‚ğİ’è‚µ‚Ü‚·D */
+    	/** ãƒ¬ãƒ³ãƒ€ãƒ©ã®ãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®šã—ã¾ã™ï¼ */
     	public Component getTableCellRendererComponent(JTable table,
     	                                               Object value,
                         						       boolean isSelected,
@@ -144,9 +144,9 @@ Debug.println("model set: " + model.getClass().getName());
     	    
     	    MidiEvent event = (MidiEvent) value;
     	    
-    	    // Œ»İ‚Ì Tick ’l‚É‚ ‚é Midi ƒƒbƒZ[ƒW‚ğæ‚èo‚·
+    	    // ç¾åœ¨ã® Tick å€¤ã«ã‚ã‚‹ Midi ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–ã‚Šå‡ºã™
     	    MidiMessage message = event.getMessage();
-    	    // Œ»İ‚Ì Tick ’l‚Ìæ“¾
+    	    // ç¾åœ¨ã® Tick å€¤ã®å–å¾—
     	    long tick = event.getTick();
     	    
     	    if (message instanceof ShortMessage) {
@@ -177,7 +177,7 @@ Debug.println("model set: " + model.getClass().getName());
     	            break;
     	        }
     	    } else if (message instanceof SysexMessage) {
-    	        // Sysex ‚Ìƒf[ƒ^‚ğæ‚èo‚·
+    	        // Sysex ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚Šå‡ºã™
     	        SysexMessage msg = (SysexMessage) message;
     	        byte[] data = msg.getData();
     	        StringBuilder sb = new StringBuilder();
@@ -203,7 +203,7 @@ Debug.println("model set: " + model.getClass().getName());
     	            break;
     	        }
     	    } else if (message instanceof MetaMessage) {
-    	        // MetaMessage‚Ìƒf[ƒ^‚ğæ‚èo‚·
+    	        // MetaMessageã®ãƒ‡ãƒ¼ã‚¿ã‚’å–ã‚Šå‡ºã™
     	        MetaMessage msg = (MetaMessage) message;
     	        int type = msg.getType();
     	        byte[] data = msg.getData();
@@ -234,7 +234,7 @@ Debug.println("model set: " + model.getClass().getName());
     	    return this;
     	}
     	
-    	/** ƒ`ƒƒƒ“ƒlƒ‹ƒƒbƒZ[ƒW–¼‚ğæ“¾‚µ‚Ü‚·D */
+    	/** ãƒãƒ£ãƒ³ãƒãƒ«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸åã‚’å–å¾—ã—ã¾ã™ï¼ */
     	private String getChannelMessage(int statusByte, int value1) {
     	    switch (statusByte / 16) {
     	    case 8:    // 128
@@ -340,7 +340,7 @@ Debug.println(e);
 
     //-------------------------------------------------------------------------
 
-    /** ƒJƒ‰ƒ€‚Ì–¼‘O */
+    /** ã‚«ãƒ©ãƒ ã®åå‰ */
     enum Column {
         track(50),
         tick(100),
@@ -363,7 +363,7 @@ Debug.println(e);
         /** */
         private List<MidiEvent> events;
 
-        /** ƒgƒ‰ƒbƒN”Ô† */
+        /** ãƒˆãƒ©ãƒƒã‚¯ç•ªå· */
         private int trackNumber;
 
         /** */
@@ -374,7 +374,7 @@ Debug.println(e);
         /** */
         private Set<Filter> filters = new HashSet<Filter>();
 
-        /** ƒe[ƒuƒ‹ƒ‚ƒfƒ‹‚ğ\’z‚µ‚Ü‚·D */
+        /** ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ¢ãƒ‡ãƒ«ã‚’æ§‹ç¯‰ã—ã¾ã™ï¼ */
         public SequenceTableModel(Sequence sequence) {
 
             if (sequence.getTracks().length < 1) {
@@ -397,12 +397,12 @@ Debug.println(e);
             return tracks;
         }
 
-        /** ƒgƒ‰ƒbƒNƒiƒ“ƒo[‚ğ•Ô‚µ‚Ü‚·D */
+        /** ãƒˆãƒ©ãƒƒã‚¯ãƒŠãƒ³ãƒãƒ¼ã‚’è¿”ã—ã¾ã™ï¼ */
         public int getTrackNumber() {
             return trackNumber;
         }
 
-        /** ƒgƒ‰ƒbƒNƒiƒ“ƒo[‚ğ•Ô‚µ‚Ü‚·D */
+        /** ãƒˆãƒ©ãƒƒã‚¯ãƒŠãƒ³ãƒãƒ¼ã‚’è¿”ã—ã¾ã™ï¼ */
         public void setTrackNumber(int trackNumber) {
             this.trackNumber = trackNumber;
 Debug.println(this.trackNumber);
@@ -499,22 +499,22 @@ Debug.println(this.trackNumber);
 
         //---------------------------------------------------------------------
 
-        /** ƒJƒ‰ƒ€”‚ğæ“¾‚µ‚Ü‚·D */
+        /** ã‚«ãƒ©ãƒ æ•°ã‚’å–å¾—ã—ã¾ã™ï¼ */
         public int getColumnCount() {
             return Column.values().length;
         }
 
-        /** ƒJƒ‰ƒ€–¼‚ğæ“¾‚µ‚Ü‚·D */
+        /** ã‚«ãƒ©ãƒ åã‚’å–å¾—ã—ã¾ã™ï¼ */
         public String getColumnName(int columnIndex) {
             return Column.values()[columnIndex].name();
         }
 
-        /** s”‚ğæ“¾‚µ‚Ü‚·D */
+        /** è¡Œæ•°ã‚’å–å¾—ã—ã¾ã™ï¼ */
         public int getRowCount() {
             return events.size();
         }
 
-        /** w’è‚µ‚½ƒJƒ‰ƒ€Cs‚É‚ ‚é’l‚ğæ“¾‚µ‚Ü‚·D */
+        /** æŒ‡å®šã—ãŸã‚«ãƒ©ãƒ ï¼Œè¡Œã«ã‚ã‚‹å€¤ã‚’å–å¾—ã—ã¾ã™ï¼ */
         public Object getValueAt(int rowIndex, int columnIndex) {
             if (columnIndex == 0) {
                 if (dispatchChannel) {
@@ -527,12 +527,12 @@ Debug.println(this.trackNumber);
             }
         }
 
-        /** ƒJƒ‰ƒ€‚ÌƒNƒ‰ƒX‚ğæ“¾‚µ‚Ü‚·D */
+        /** ã‚«ãƒ©ãƒ ã®ã‚¯ãƒ©ã‚¹ã‚’å–å¾—ã—ã¾ã™ï¼ */
         public Class<?> getColumnClass(int columnIndex) {
             return getValueAt(0, columnIndex).getClass();
         }
 
-        /** w’è‚µ‚½ƒZƒ‹‚ª•ÒW‰Â”\‚©‚Ç‚¤‚©D */
+        /** æŒ‡å®šã—ãŸã‚»ãƒ«ãŒç·¨é›†å¯èƒ½ã‹ã©ã†ã‹ï¼ */
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             MidiMessage message = events.get(rowIndex).getMessage();
             if (message instanceof ShortMessage &&
