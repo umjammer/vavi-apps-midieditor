@@ -115,186 +115,186 @@ Debug.println("model set: " + model.getClass().getName());
 
     /** テーブルのセルレンダラ */
     private TableCellRenderer tcRenderer = new DefaultTableCellRenderer() {
-    	/** レンダラのテキストを設定します． */
-    	public Component getTableCellRendererComponent(JTable table,
-    	                                               Object value,
-                        						       boolean isSelected,
-                        						       boolean hasFocus,
-                        						       int row,
-                        						       int column) {
-    	    if (isSelected) {
-    	        super.setForeground(table.getSelectionForeground());
-    	        super.setBackground(table.getSelectionBackground());
-    	    } else {
-    	        super.setForeground(table.getForeground());
-    	        super.setBackground(table.getBackground());
-    	    }
-    	    
-    	    setFont(table.getFont());
-    	    
-    	    if (hasFocus) {
-    	        setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
-    	        if (table.isCellEditable(row, column)) {
-    	            super.setForeground(UIManager.getColor("Table.focusCellForeground"));
-    	            super.setBackground(UIManager.getColor("Table.focusCellBackground"));
-    	        }
-    	    } else {
-    	        setBorder(noFocusBorder);
-    	    }
-    	    
-    	    MidiEvent event = (MidiEvent) value;
-    	    
-    	    // 現在の Tick 値にある Midi メッセージを取り出す
-    	    MidiMessage message = event.getMessage();
-    	    // 現在の Tick 値の取得
-    	    long tick = event.getTick();
-    	    
-    	    if (message instanceof ShortMessage) {
-    	        ShortMessage msg = (ShortMessage) message;
-    	        int channel = msg.getChannel();
-    	        int command = msg.getCommand();
-    	        int data1 = msg.getData1();
-    	        int data2 = msg.getData2();
-    	        switch (column) {
-    	        case 1:	// tick
-    	            setText(String.valueOf(tick));
-    	            break;
-    	        case 2:	// channel
-    	            setText(String.valueOf(channel + 1));
-    	            break;
-    	        case 3:	// event
-    	            setText(getChannelMessage(command, data1));
-    	            break;
-    	        case 4:	// data1
-    	            if (command == ShortMessage.PROGRAM_CHANGE) { 
-    	                setText(String.valueOf(data1) + " " + MidiConstants.getInstrumentName(data1));
-    	            } else {
-    	                setText(String.valueOf(data1));
-    	            }
-    	            break;
-    	        case 5:	// data2
-    	            setText(String.valueOf(data2));
-    	            break;
-    	        }
-    	    } else if (message instanceof SysexMessage) {
-    	        // Sysex のデータを取り出す
-    	        SysexMessage msg = (SysexMessage) message;
-    	        byte[] data = msg.getData();
-    	        StringBuilder sb = new StringBuilder();
-    	        for (int i = 0; i < data.length; i++) {
-    	            sb.append(StringUtil.toHex2(data[i]));
-    	            sb.append(" ");
-    	        }
-    	        switch (column) {
-    	        case 1:	// tick
-    	            setText(String.valueOf(tick));
-    	            break;
-    	        case 2:	// channel
-    	            setText("n/a");
-    	            break;
-    	        case 3:	// event
-    	            setText("SYSX");
-    	            break;
-    	        case 4:	// data1
-    	            setText(sb.toString());
-    	            break;
-    	        case 5:	// data2
-    	            setText("");
-    	            break;
-    	        }
-    	    } else if (message instanceof MetaMessage) {
-    	        // MetaMessageのデータを取り出す
-    	        MetaMessage msg = (MetaMessage) message;
-    	        int type = msg.getType();
-    	        byte[] data = msg.getData();
-    	        StringBuilder sb = new StringBuilder();
-    	        for (int i = 0; i < data.length; i++) {
-    	            sb.append(StringUtil.toHex2(data[i]));
-    	            sb.append(" ");
-    	        }
-    	        switch (column) {
-    	        case 1:	// tick
-    	            setText(String.valueOf(tick));
-    	            break;
-    	        case 2:	// channel
-    	            setText("n/a");
-    	            break;
-    	        case 3:	// event
-    	            setText("META");
-    	            break;
-    	        case 4:	// data1
-    	            setText(String.valueOf(type));
-    	            break;
-    	        case 5:	// data2
-    	            setText(sb.toString());
-    	            break;
-    	        }
-    	    }
-    	    
-    	    return this;
-    	}
-    	
-    	/** チャンネルメッセージ名を取得します． */
-    	private String getChannelMessage(int statusByte, int value1) {
-    	    switch (statusByte / 16) {
-    	    case 8:    // 128
-    	        return "NOTE_OFF";
-    	    case 9:    // 144
-    	        return "NOTE_ON";
-    	    case 10:   // 160
-    	        return "POLY_PRESSURE";
-    	    case 11:   // 176
-    	        if (value1 >= 120) {
-    	            return "CHANNEL_MODE_MESSAGE";
-    	        } else {
-    	            return "CONTROL_CHANGE";
-    	        }
-    	    case 12:   // 192
-    	        return "PROGRAM_CHANGE";
-    	    case 13:   // 208
-    	        return "CHANNEL_PRESSURE";
-    	    case 14:   // 224
-    	        return "PITCH_BEND_CHANGE";
-    	    default:
-    	        return String.valueOf(statusByte);
-    	    }
-    	}
+        /** レンダラのテキストを設定します． */
+        public Component getTableCellRendererComponent(JTable table,
+                                                       Object value,
+                                                       boolean isSelected,
+                                                       boolean hasFocus,
+                                                       int row,
+                                                       int column) {
+            if (isSelected) {
+                super.setForeground(table.getSelectionForeground());
+                super.setBackground(table.getSelectionBackground());
+            } else {
+                super.setForeground(table.getForeground());
+                super.setBackground(table.getBackground());
+            }
+            
+            setFont(table.getFont());
+            
+            if (hasFocus) {
+                setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
+                if (table.isCellEditable(row, column)) {
+                    super.setForeground(UIManager.getColor("Table.focusCellForeground"));
+                    super.setBackground(UIManager.getColor("Table.focusCellBackground"));
+                }
+            } else {
+                setBorder(noFocusBorder);
+            }
+            
+            MidiEvent event = (MidiEvent) value;
+            
+            // 現在の Tick 値にある Midi メッセージを取り出す
+            MidiMessage message = event.getMessage();
+            // 現在の Tick 値の取得
+            long tick = event.getTick();
+            
+            if (message instanceof ShortMessage) {
+                ShortMessage msg = (ShortMessage) message;
+                int channel = msg.getChannel();
+                int command = msg.getCommand();
+                int data1 = msg.getData1();
+                int data2 = msg.getData2();
+                switch (column) {
+                case 1:    // tick
+                    setText(String.valueOf(tick));
+                    break;
+                case 2:    // channel
+                    setText(String.valueOf(channel + 1));
+                    break;
+                case 3:    // event
+                    setText(getChannelMessage(command, data1));
+                    break;
+                case 4:    // data1
+                    if (command == ShortMessage.PROGRAM_CHANGE) { 
+                        setText(String.valueOf(data1) + " " + MidiConstants.getInstrumentName(data1));
+                    } else {
+                        setText(String.valueOf(data1));
+                    }
+                    break;
+                case 5:    // data2
+                    setText(String.valueOf(data2));
+                    break;
+                }
+            } else if (message instanceof SysexMessage) {
+                // Sysex のデータを取り出す
+                SysexMessage msg = (SysexMessage) message;
+                byte[] data = msg.getData();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < data.length; i++) {
+                    sb.append(StringUtil.toHex2(data[i]));
+                    sb.append(" ");
+                }
+                switch (column) {
+                case 1:    // tick
+                    setText(String.valueOf(tick));
+                    break;
+                case 2:    // channel
+                    setText("n/a");
+                    break;
+                case 3:    // event
+                    setText("SYSX");
+                    break;
+                case 4:    // data1
+                    setText(sb.toString());
+                    break;
+                case 5:    // data2
+                    setText("");
+                    break;
+                }
+            } else if (message instanceof MetaMessage) {
+                // MetaMessageのデータを取り出す
+                MetaMessage msg = (MetaMessage) message;
+                int type = msg.getType();
+                byte[] data = msg.getData();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < data.length; i++) {
+                    sb.append(StringUtil.toHex2(data[i]));
+                    sb.append(" ");
+                }
+                switch (column) {
+                case 1:    // tick
+                    setText(String.valueOf(tick));
+                    break;
+                case 2:    // channel
+                    setText("n/a");
+                    break;
+                case 3:    // event
+                    setText("META");
+                    break;
+                case 4:    // data1
+                    setText(String.valueOf(type));
+                    break;
+                case 5:    // data2
+                    setText(sb.toString());
+                    break;
+                }
+            }
+            
+            return this;
+        }
+        
+        /** チャンネルメッセージ名を取得します． */
+        private String getChannelMessage(int statusByte, int value1) {
+            switch (statusByte / 16) {
+            case 8:    // 128
+                return "NOTE_OFF";
+            case 9:    // 144
+                return "NOTE_ON";
+            case 10:   // 160
+                return "POLY_PRESSURE";
+            case 11:   // 176
+                if (value1 >= 120) {
+                    return "CHANNEL_MODE_MESSAGE";
+                } else {
+                    return "CONTROL_CHANGE";
+                }
+            case 12:   // 192
+                return "PROGRAM_CHANGE";
+            case 13:   // 208
+                return "CHANNEL_PRESSURE";
+            case 14:   // 224
+                return "PITCH_BEND_CHANGE";
+            default:
+                return String.valueOf(statusByte);
+            }
+        }
     };
 
     //-------------------------------------------------------------------------
 
     /** */
-    private JComboBox programComboBox = new JComboBox();
+    private JComboBox<String> programComboBox = new JComboBox<>();
 
     /** */
     private TableCellEditor programCellEditor = new DefaultCellEditor(programComboBox) {
-    	/** */
-    	private MidiEvent event;
-    	int column;
-    	int row;
-    	int data1;
-    	/** */
-    	public Component getTableCellEditorComponent(JTable table,
-                        						     Object value,
-                        						     boolean isSelected,
-                        						     int row,
-                        						     int column) {
+        /** */
+        private MidiEvent event;
+        int column;
+        int row;
+        int data1;
+        /** */
+        public Component getTableCellEditorComponent(JTable table,
+                                                     Object value,
+                                                     boolean isSelected,
+                                                     int row,
+                                                     int column) {
 //Debug.println(value);
-    	    this.column = column;
-    	    this.row = row;
-    	    event = (MidiEvent) value;
-    	    ShortMessage message = (ShortMessage) event.getMessage();
-    	    data1 = message.getData1();
-    	    
-    	    ((JComboBox) getComponent()).setSelectedIndex(data1);
-    	    
-    	    return super.getTableCellEditorComponent(table, value, isSelected, row, column);
-    	}
-    	/** */
-    	public boolean stopCellEditing() {
-    	    if (model != null) {
-    	        int data1 = ((JComboBox) getComponent()).getSelectedIndex();
-    	        if (this.data1 != data1) {
+            this.column = column;
+            this.row = row;
+            event = (MidiEvent) value;
+            ShortMessage message = (ShortMessage) event.getMessage();
+            data1 = message.getData1();
+
+            ((JComboBox<?>) getComponent()).setSelectedIndex(data1);
+
+            return super.getTableCellEditorComponent(table, value, isSelected, row, column);
+        }
+        /** */
+        public boolean stopCellEditing() {
+            if (model != null) {
+                int data1 = ((JComboBox<?>) getComponent()).getSelectedIndex();
+                if (this.data1 != data1) {
 Debug.println(this.data1 + " -> " + data1);
                     ShortMessage message = (ShortMessage) event.getMessage();
                     int channel = message.getChannel();
@@ -308,9 +308,9 @@ Debug.println(e);
                     this.data1 = data1;
                     model.fireTableChanged(new TableModelEvent(model, row, row, column));
                 }
-    	    }
-    	    return true;
-    	}
+            }
+            return true;
+        }
     };
 
     //-------------------------------------------------------------------------
@@ -372,7 +372,7 @@ Debug.println(e);
         /** */
         private boolean dispatchChannel = false;
         /** */
-        private Set<Filter> filters = new HashSet<Filter>();
+        private Set<Filter> filters = new HashSet<>();
 
         /** テーブルモデルを構築します． */
         public SequenceTableModel(Sequence sequence) {
@@ -385,7 +385,7 @@ Debug.println(e);
 
             this.sequence = sequence;
 
-            events = new ArrayList<MidiEvent>();
+            events = new ArrayList<>();
 
             trackNumber = 0;
 
@@ -398,6 +398,7 @@ Debug.println(e);
         }
 
         /** トラックナンバーを返します． */
+        @SuppressWarnings("unused")
         public int getTrackNumber() {
             return trackNumber;
         }

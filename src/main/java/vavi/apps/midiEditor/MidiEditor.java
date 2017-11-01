@@ -75,7 +75,7 @@ public class MidiEditor {
     private SequenceTable table;
 
     /** トラックセレクタ */
-    private JComboBox selector;
+    private JComboBox<Integer> selector;
 
     /** */
     private JCheckBox[] solos;
@@ -117,7 +117,7 @@ public class MidiEditor {
 
         // 
         toolBar.add(new JLabel("Track: "));
-        selector = new JComboBox();
+        selector = new JComboBox<>();
         selector.addItemListener(trackListener);
         toolBar.add(selector);
 

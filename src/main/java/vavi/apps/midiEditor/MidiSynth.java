@@ -72,7 +72,7 @@ import vavi.sound.midi.MidiConstants;
 /**
  * Illustrates general MIDI melody instruments and MIDI controllers.
  *
- * @version @(#)MidiSynth.java	1.15 99/12/03
+ * @version @(#)MidiSynth.java    1.15 99/12/03
  * @author Brian Lichtenwalter  
  */
 public class MidiSynth extends JPanel {
@@ -94,8 +94,8 @@ public class MidiSynth extends JPanel {
     JCheckBox mouseOverCB = new JCheckBox("mouseOver", true);
     JSlider veloS, presS, bendS, revbS;
     JCheckBox soloCB, monoCB, muteCB, sustCB; 
-    Vector<Key> keys = new Vector<Key>();
-    Vector<Key> whiteKeys = new Vector<Key>();
+    Vector<Key> keys = new Vector<>();
+    Vector<Key> whiteKeys = new Vector<>();
     JTable table;
     Piano piano;
     boolean record;
@@ -138,7 +138,7 @@ public class MidiSynth extends JPanel {
         } catch (Exception ex) { ex.printStackTrace(); return; }
 
         Soundbank sb = synthesizer.getDefaultSoundbank();
-	if (sb != null) {
+    if (sb != null) {
             instruments = synthesizer.getDefaultSoundbank().getInstruments();
             synthesizer.loadInstrument(instruments[0]);
         }
@@ -237,7 +237,7 @@ public class MidiSynth extends JPanel {
      */
     class Piano extends JPanel implements MouseListener {
 
-        Vector<Key> blackKeys = new Vector<Key>();
+        Vector<Key> blackKeys = new Vector<>();
         Key prevKey;
         final int kw = 16, kh = 80;
 
@@ -247,7 +247,7 @@ public class MidiSynth extends JPanel {
             setPreferredSize(new Dimension(42*kw, kh+1));
             int transpose = 24;  
             int whiteIDs[] = { 0, 2, 4, 5, 7, 9, 11 }; 
-          
+
             for (int i = 0, x = 0; i < 6; i++) {
                 for (int j = 0; j < 7; j++, x += kw) {
                     int keyNum = i * 12 + whiteIDs[j] + transpose;
@@ -509,7 +509,7 @@ public class MidiSynth extends JPanel {
             presS = createSlider("Pressure", p);
             revbS = createSlider("Reverb", p);
 
-			// create a slider with a 14-bit range of values for pitch-bend
+            // create a slider with a 14-bit range of values for pitch-bend
             bendS = create14BitSlider("Bend", p);
 
             p.add(Box.createHorizontalStrut(10));
@@ -519,7 +519,7 @@ public class MidiSynth extends JPanel {
             p.setBorder(new EmptyBorder(10,0,10,0));
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
 
-            JComboBox combo = new JComboBox();
+            JComboBox<String> combo = new JComboBox<>();
             combo.setPreferredSize(new Dimension(120,25));
             combo.setMaximumSize(new Dimension(120,25));
             for (int i = 1; i <= 16; i++) {
@@ -599,7 +599,7 @@ recordB.setEnabled(false);
 
         public void itemStateChanged(ItemEvent e) {
             if (e.getSource() instanceof JComboBox) {
-                JComboBox combo = (JComboBox) e.getSource();
+                JComboBox<?> combo = (JComboBox<?>) e.getSource();
                 cc = channels[combo.getSelectedIndex()];
                 cc.setComponentStates();
             } else {
@@ -645,8 +645,8 @@ recordB.setEnabled(false);
     class RecordFrame extends JFrame implements ActionListener, MetaEventListener {
 
         public JButton recordB, playB, saveB;
-        Vector<TrackData> tracks = new Vector<TrackData>();
-        DefaultListModel listModel = new DefaultListModel();
+        Vector<TrackData> tracks = new Vector<>();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
         TableModel dataModel;
 //        JTable table;
 
@@ -661,7 +661,7 @@ recordB.setEnabled(false);
                 sequence = new Sequence(Sequence.PPQ, 10);
             } catch (Exception ex) { ex.printStackTrace(); }
 
-// 	    JPanel p1 = new JPanel(new BorderLayout());
+//         JPanel p1 = new JPanel(new BorderLayout());
 
             JPanel p2 = new JPanel();
             p2.setBorder(new EmptyBorder(5,5,5,5));
@@ -701,24 +701,24 @@ recordB.setEnabled(false);
                     } 
                 }
             };
-    
+
             table = new JTable(dataModel);
             TableColumn col = table.getColumn("Channel #");
             col.setMaxWidth(65);
             table.sizeColumnsToFit(0);
-        
+
             JScrollPane scrollPane = new JScrollPane(table);
             EmptyBorder eb = new EmptyBorder(0,5,5,5);
             scrollPane.setBorder(new CompoundBorder(eb,new EtchedBorder()));
 
-	    getContentPane().add("Center", scrollPane);
-	    pack();
+            getContentPane().add("Center", scrollPane);
+            pack();
             Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
             int w = 210;
             int h = 160;
             setLocation(d.width/2 - w/2, d.height/2 - h/2);
             setSize(w, h);
-	    setVisible(true);
+            setVisible(true);
         }
 
 
