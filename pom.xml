@@ -29,6 +29,14 @@
     </plugins>
   </build>
   <repositories>
+    <repository>
+      <id>klab-commons-cli-mvn-repo</id>
+      <url>https://raw.github.com/umjammer/klab-commons-cli/mvn-repo/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
   </repositories>
   <dependencies>
   	<dependency>
@@ -41,13 +49,13 @@
   	<dependency>
   		<groupId>vavi</groupId>
   		<artifactId>vavi-commons</artifactId>
-  		<version>1.0.0</version>
+  		<version>1.0.4</version>
   		<optional>false</optional>
   	</dependency>
   	<dependency>
   		<groupId>vavi</groupId>
   		<artifactId>vavi-sound</artifactId>
-  		<version>1.0.0</version>
+  		<version>1.0.1</version>
   		<optional>false</optional>
   	</dependency>
   </dependencies>

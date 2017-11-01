@@ -15,6 +15,7 @@
 <project name="vavi.apps.midiEditor" default="run" basedir="."
          xmlns:ivy="antlib:org.apache.ivy.ant">
 
+  <property environment="env"/>
   <property file="local.properties" />
 
   <property name="dir.build" value="target/classes" />
