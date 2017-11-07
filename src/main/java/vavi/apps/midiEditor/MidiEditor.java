@@ -56,7 +56,7 @@ import vavi.util.RegexFileFilter;
 
 /**
  * MIDI ファイルのエディタです．
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 010911 nsano initial version <br>
  *          0.01 031212 nsano refine file filter <br>
@@ -115,7 +115,7 @@ public class MidiEditor {
         // ----
         JToolBar toolBar = new JToolBar();
 
-        // 
+        //
         toolBar.add(new JLabel("Track: "));
         selector = new JComboBox<>();
         selector.addItemListener(trackListener);
@@ -473,7 +473,7 @@ Debug.println("sequencer is not synthesizer");
                 }
             }
         } catch (NullPointerException e) {
-Debug.println(Level.WARNING, "tracks has not been set");            
+Debug.println(Level.WARNING, "tracks has not been set");
         }
     }
 

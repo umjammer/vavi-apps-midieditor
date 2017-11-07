@@ -37,7 +37,7 @@ import vavi.util.StringUtil;
 
 /**
  * TableModel for Midi Sequence
- * 
+ *
  * @author <a href="mailto:vavivavi@yahoo.co.jp">Naohide Sano</a> (nsano)
  * @version 0.00 020702 nsano initial version <br>
  *          0.01 030909 nsano refine <br>
@@ -129,9 +129,9 @@ Debug.println("model set: " + model.getClass().getName());
                 super.setForeground(table.getForeground());
                 super.setBackground(table.getBackground());
             }
-            
+
             setFont(table.getFont());
-            
+
             if (hasFocus) {
                 setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
                 if (table.isCellEditable(row, column)) {
@@ -141,14 +141,14 @@ Debug.println("model set: " + model.getClass().getName());
             } else {
                 setBorder(noFocusBorder);
             }
-            
+
             MidiEvent event = (MidiEvent) value;
-            
+
             // 現在の Tick 値にある Midi メッセージを取り出す
             MidiMessage message = event.getMessage();
             // 現在の Tick 値の取得
             long tick = event.getTick();
-            
+
             if (message instanceof ShortMessage) {
                 ShortMessage msg = (ShortMessage) message;
                 int channel = msg.getChannel();
@@ -166,7 +166,7 @@ Debug.println("model set: " + model.getClass().getName());
                     setText(getChannelMessage(command, data1));
                     break;
                 case 4:    // data1
-                    if (command == ShortMessage.PROGRAM_CHANGE) { 
+                    if (command == ShortMessage.PROGRAM_CHANGE) {
                         setText(String.valueOf(data1) + " " + MidiConstants.getInstrumentName(data1));
                     } else {
                         setText(String.valueOf(data1));
@@ -230,10 +230,10 @@ Debug.println("model set: " + model.getClass().getName());
                     break;
                 }
             }
-            
+
             return this;
         }
-        
+
         /** チャンネルメッセージ名を取得します． */
         private String getChannelMessage(int statusByte, int value1) {
             switch (statusByte / 16) {
@@ -537,7 +537,7 @@ Debug.println(this.trackNumber);
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             MidiMessage message = events.get(rowIndex).getMessage();
             if (message instanceof ShortMessage &&
-                ((ShortMessage) message).getCommand() == ShortMessage.PROGRAM_CHANGE && 
+                ((ShortMessage) message).getCommand() == ShortMessage.PROGRAM_CHANGE &&
                 columnIndex == 4) {
                 return true;
             } else {
