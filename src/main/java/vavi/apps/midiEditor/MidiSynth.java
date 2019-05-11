@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2002 by Naohide Sano, All rights reserved.
- *
- * Programmed by Naohide Sano
+ * http://ehess.modelisationsavoirs.fr/marc/ens/projets/cours/java/
  */
 
 package vavi.apps.midiEditor;
