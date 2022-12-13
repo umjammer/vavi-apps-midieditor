@@ -167,7 +167,7 @@ Debug.println("model set: " + model.getClass().getName());
                     break;
                 case 4:    // data1
                     if (command == ShortMessage.PROGRAM_CHANGE) {
-                        setText(String.valueOf(data1) + " " + MidiConstants.getInstrumentName(data1));
+                        setText(data1 + " " + MidiConstants.getInstrumentName(data1));
                     } else {
                         setText(String.valueOf(data1));
                     }
@@ -181,8 +181,8 @@ Debug.println("model set: " + model.getClass().getName());
                 SysexMessage msg = (SysexMessage) message;
                 byte[] data = msg.getData();
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < data.length; i++) {
-                    sb.append(StringUtil.toHex2(data[i]));
+                for (byte datum : data) {
+                    sb.append(StringUtil.toHex2(datum));
                     sb.append(" ");
                 }
                 switch (column) {
@@ -208,8 +208,8 @@ Debug.println("model set: " + model.getClass().getName());
                 int type = msg.getType();
                 byte[] data = msg.getData();
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < data.length; i++) {
-                    sb.append(StringUtil.toHex2(data[i]));
+                for (byte datum : data) {
+                    sb.append(StringUtil.toHex2(datum));
                     sb.append(" ");
                 }
                 switch (column) {
@@ -352,10 +352,10 @@ Debug.println(e);
         Column(int width) {
             this.width = width;
         }
-    };
+    }
 
     /** */
-    private class SequenceTableModel extends AbstractTableModel {
+    private static class SequenceTableModel extends AbstractTableModel {
 
         /** */
         private Sequence sequence;
@@ -519,7 +519,7 @@ Debug.println(this.trackNumber);
         public Object getValueAt(int rowIndex, int columnIndex) {
             if (columnIndex == 0) {
                 if (dispatchChannel) {
-                    return String.valueOf(trackNumber + 1) + " : " + rowIndex;
+                    return trackNumber + 1 + " : " + rowIndex;
                 } else {
                     return 1 + " : " + rowIndex;
                 }

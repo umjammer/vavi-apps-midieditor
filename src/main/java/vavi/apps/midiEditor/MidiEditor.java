@@ -14,13 +14,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
+import java.nio.file.Files;
 import java.util.logging.Level;
 
 import javax.sound.midi.ControllerEventListener;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaEventListener;
-import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
@@ -294,7 +293,7 @@ Debug.printStackTrace(e);
                     while (thread == thisThread) {
                         try {
                             Thread.sleep(99);
-                        } catch (Exception e) {
+                        } catch (Exception ignored) {
                         }
 
                         long len = sequencer.getMicrosecondLength();
@@ -469,7 +468,7 @@ Debug.println("sequencer is not synthesizer");
             boolean[] tracks = table.getTracks();
             for (int i = 0; i < tracks.length; i++) {
                 if (tracks[i]) {
-                    selector.addItem(new Integer(i + 1));
+                    selector.addItem(i + 1);
                 }
             }
         } catch (NullPointerException e) {
@@ -481,7 +480,7 @@ Debug.println(Level.WARNING, "tracks has not been set");
     private ItemListener trackListener = new ItemListener() {
         public void itemStateChanged(ItemEvent ev) {
             if (ev.getStateChange() == ItemEvent.SELECTED) {
-                int i = ((Integer) selector.getSelectedItem()).intValue() - 1;
+                int i = (Integer) selector.getSelectedItem() - 1;
                 table.removeTableModelListener(tml);
                 table.setTrackNumber(i);
                 table.addTableModelListener(tml);
@@ -490,11 +489,9 @@ Debug.println(Level.WARNING, "tracks has not been set");
     };
 
     /** */
-    private MetaEventListener mel = new MetaEventListener() {
-        public void meta(MetaMessage message) {
-            if (message.getType() == 47) { // 47 is end of track
-                stop();
-            }
+    private MetaEventListener mel = message -> {
+        if (message.getType() == 47) { // 47 is end of track
+            stop();
         }
     };
 
@@ -547,7 +544,7 @@ Debug.println(command);
                         new ProgressMonitorInputStream(
                                 null,
                                 "読み込み中 " + file,
-                                new BufferedInputStream(new FileInputStream(file))));
+                                new BufferedInputStream(Files.newInputStream(file.toPath()))));
 
 Debug.println("divisionType: " + sequence.getDivisionType());
 Debug.println("resolution  : " + sequence.getResolution());
