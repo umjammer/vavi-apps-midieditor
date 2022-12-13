@@ -8,12 +8,12 @@
 
   <groupId>vavi</groupId>
   <artifactId>vavi-apps-midieditor</artifactId>
+  <version>0.0.2</version>
 
   <name>Vavi MIDI Editor Application</name>
   <organization>
     <name>vavi</name>
   </organization>
-  <version>0.0.1</version>
   <url>http://www.vavisoft.com/</url>
   <description/>
 
